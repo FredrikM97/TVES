@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public abstract class ACar extends CarState{
 	
 	/**
@@ -12,9 +14,11 @@ public abstract class ACar extends CarState{
 	 * <br>
 	 * <b>Post-condition</b> if position = position_new - 1
 	 * 
-	 * @return data structure with position and situation 
+	 * <br>Test-cases:
 	 * 
-	 * <b>Test-cases:
+	 * @return data structure containing position and number of detected parking spaces 
+	 * 
+	 * 
 	 * 
 	 * 
 	 */
@@ -34,9 +38,11 @@ public abstract class ACar extends CarState{
 	 * <b>Post-condition</b> if not empty number of detected parking spaces should
 	 * be 0
 	 * 
-	 * @return data structure with position and number of detected parking spaces
+	 * <br>Test-cases:
+	 * 
+	 * @return data structure containing position and number of detected parking spaces
 	 *         
-	 * <b>Test-cases:
+	 * 
 	 */
 	public abstract CarState MoveBackward();
 	
@@ -48,9 +54,11 @@ public abstract class ACar extends CarState{
 	 * <br>
 	 * <b>Pre-condition</b> Sensors exists
 	 * 
+	 * <br>Test-cases:
+	 * 
 	 * @return average if average >= 5 return boolean True 
 	 * 
-	 * <b>Test-cases:
+	 * 
 	 */
 	public abstract boolean isEmpty();
 	
@@ -67,10 +75,12 @@ public abstract class ACar extends CarState{
 	 * <br>
 	 * <b>Post-condition</b> if parking exists but parking is false
 	 * 
+	 * <br>Test-cases:
+	 * 
 	 * <br>
 	 * <b>Post-condition</b> if position = position_new + 5 
 	 * 
-	 * <b>Test-cases:
+	 * 
 	 */
 	public abstract void Park();
 	
@@ -83,10 +93,12 @@ public abstract class ACar extends CarState{
 	 * <br>
 	 * <b>Pre-condition</b> if parked == True
 	 * 
+	 * <br>Test-cases:
+	 * 
 	 * <br>
 	 * <b>Post-condition</b> if position = position_new - 5 
 	 * 
-	 * <b>Test-cases:
+	 * 
 	 */
 	public abstract void UnPark();
 	
@@ -96,77 +108,11 @@ public abstract class ACar extends CarState{
 	 * <br>
 	 * <b>Post-condition</b> position <= 500 and position >=0
 	 * 
+	 * <br>Test-cases:
+	 * 
 	 * @return position and state of car 
 	 * 
-	 * <b>Test-cases:
+	 * 
 	 */
 	public abstract CarState WhereIs();
-}
-
-class Tesla extends ACar {
-	private Actuator gottaMovit;
-	private Sensor sensor;
-	
-	public Tesla() {}
-
-	
-	public CarState MoveForward() {
-		if (position < 500) {
-			// Do some error
-		}
-		position += 1;
-		if (isEmpty()) {
-			parkingSpace += 1;
-		} else {
-			parkingSpace = 0;
-		}
-		return new CarState(this);
-	}
-
-	
-	public CarState MoveBackward() {
-		if (position > 0) {
-			// Do some error
-		}
-		position -= 1;
-		if (isEmpty()) {
-			parkingSpace -= 1;
-		} else {
-			parkingSpace = 0;
-		}
-		return new CarState(this);
-	}
-
-	
-	public boolean isEmpty() {
-		// Query sensors 5 times
-		// Filter noise
-		// if distance > threshhold and within boundery -> is Empty equals true
-		return true;
-	}
-
-	
-	public void Park() {
-		if (parked) {
-			/* TODO already parked!); */ }
-		while (parkingSpace < 5 || position > 500) {
-			MoveForward();
-		}
-		System.out.println("Pre-programmed reverse parallel parking maneuve");
-	}
-
-	
-	public void UnPark() {
-
-	}
-
-	
-	public CarState WhereIs() {
-		return new CarState(this);
-	}
-
-	
-	public void filterNoise() {
-
-	}
 }

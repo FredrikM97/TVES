@@ -1,7 +1,7 @@
 package main;
 
 interface ISensor {
-	public void read();
+	public Integer read();
 }
 
 public class Sensor implements ISensor {
@@ -13,8 +13,10 @@ public class Sensor implements ISensor {
 	 * <b>Pre-condition</b> distance > 0 || distance < 200
 	 * 
 	 * Test-cases:
+	 * @return 
 	 */
-	public void read() {
+	public Integer read() {
+		return 100;
 	}
 
 }

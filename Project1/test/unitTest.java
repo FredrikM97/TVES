@@ -1,6 +1,9 @@
 package test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
+import main.Tesla;
 /*
  * Assumption:
  * Sensors are same place on the front
@@ -10,9 +13,18 @@ import org.junit.jupiter.api.Test;
 class mainTest {
 	
 	
+	@Before 
+	public void initialize() {
+		
+	}
 	
 	@Test
-	void MoveForward(){}
+	void MoveForward(){
+		// How do I change the sensor?????
+		Tesla car = new Tesla();
+		assertEquals(1, car.MoveForward().position);
+		
+	}
 	
 	
 	@Test
