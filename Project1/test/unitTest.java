@@ -4,28 +4,30 @@ import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
 import main.Tesla;
-/*
- * Assumption:
- * Sensors are same place on the front
- * 
- * In MoveForward does situation assume that we have one sensor in the front and one in the back? Or what is the specification of the sensors
- */
+
 class mainTest {
-	
+	Tesla car;
 	
 	@Before 
 	public void initialize() {
-		
+		car = new Tesla();
 	}
 	
 	@Test
-	void MoveForward(){
-		// How do I change the sensor?????
-		Tesla car = new Tesla();
-		assertEquals(1, car.MoveForward().position);
+	void moveForward_PositionEqualsStreetLength_CarState(){
+		car.
 		
 	}
-	
+	@Test
+	void moveForward_PositionEqualsStreetLength_IllegalStateException(){
+		car.
+		
+	}
+	@Test
+	void moveForward_InstanceOfActuatorExists_NullPointerException(){
+		car.
+		
+	}
 	
 	@Test
     void MoveBackward(){}

@@ -3,7 +3,9 @@ package main;
 import java.util.ArrayList;
 
 public class Tesla extends ACar {
-	private Sensor sensor;
+	private Sensor sensor1;
+	private Sensor sensor2;
+
 	
 	public Tesla() {}
 
@@ -77,14 +79,6 @@ public class Tesla extends ACar {
 
 	
 	public double filterNoise(ArrayList<Integer> sensorData) {
-		// TODO should probobly be rewritten
-		Integer distance = 0;
-		  if(!sensorData.isEmpty()) {
-		    for (Integer mark : sensorData) {
-		    	distance += mark;
-		    }
-		    return distance.doubleValue() / sensorData.size();
-		  }
-		  return distance;	  
+			  
 	}
 }
