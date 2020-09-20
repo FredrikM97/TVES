@@ -7,6 +7,7 @@ import autopark.Actuator;
 import autopark.Car;
 import autopark.CarState;
 import autopark.Sensor;
+import autopark.StatusWrapper;
 
 public class CarTest {
 	Car wroom;
@@ -14,6 +15,8 @@ public class CarTest {
 	Actuator brokenActuator;
 	Sensor sensor200;
 	Sensor sensor0;
+	Sensor sensorSTD;
+	public static boolean toggle = true;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,6 +39,12 @@ public class CarTest {
 		sensor0  = new Sensor() {
 			public int read() {
 				return 0;
+			}
+		};
+		sensorSTD  = new Sensor() {
+			public int read() {
+				toggle = !toggle;
+				return toggle ? 200 : 0;
 			}
 		};
 	}
@@ -74,7 +83,15 @@ public class CarTest {
 		wroom.parked = false;
 		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
-
+	
+	@Test
+	public void moveForward_brokenActuator_unexpectedState() {
+		wroom.position = wroom.streetLength-1;
+		wroom.moveCar = brokenActuator;
+		wroom.parked = false;
+		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
+	}
+	
 	/**
 	 * start of isEmpty tests
 	 */
@@ -112,7 +129,7 @@ public class CarTest {
 
 	@Test
 	public void moveBackward_parked_CarState() {
-		wroom.parked = true;
+		wroom.parked = true;	
 		wroom.moveCar = workingActuator;
 		wroom.position = 1;
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
@@ -133,7 +150,15 @@ public class CarTest {
 		wroom.position = 1;
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
-
+	
+	@Test
+	public void moveBackward_brokenActuator_unexpectedState() {
+		wroom.position = wroom.streetLength;
+		wroom.moveCar = brokenActuator;
+		wroom.parked = false;
+		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
+	}
+	
 	/**
 	 * start of park tests
 	 */
@@ -220,5 +245,89 @@ public class CarTest {
 		wroom.position = wroom.position - 1;
 		assert (wroom.compareTo(lastState) != 0);
 	}
+	
+	
+	/******************************************************************************** 
+	 * 								Structural testing								*
+	 ********************************************************************************/
 
+	/**
+	 * start of moveForward tests
+	 */
+	@Test
+	public void moveForward_workingSensors_CarState() {
+		wroom.position = wroom.streetLength-1;
+		wroom.moveCar = workingActuator;
+		wroom.parked = false;
+		wroom.ultrasound1 = sensor200;
+		wroom.ultrasound2 = sensor200;
+		assert (wroom.moveForward().getContent() instanceof CarState);
+	}
+	
+	/**
+	 * start of isEmpty tests
+	 */
+	@Test
+	public void isEmpty_sensor2noInit_noInit() {
+		wroom.ultrasound1 = sensor200;
+		wroom.ultrasound2 = null;
+		assert (wroom.isEmpty().getStatus().equals(autopark.StatusWrapper.NO_INIT));
+	}
+	
+	@Test
+	public void isEmpty_stdSensors_notPossible() {
+		wroom.ultrasound1 = sensorSTD;
+		wroom.ultrasound2 = sensorSTD;
+		assert (wroom.isEmpty().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
+	}
+	
+	@Test
+	public void isEmpty_Sensors1isStd_true() {
+		wroom.ultrasound1 = sensorSTD;
+		wroom.ultrasound2 = sensor200;
+		assert (wroom.isEmpty().getContent());
+	}
+	
+	@Test
+	public void isEmpty_Sensors2isStd_true() {
+		wroom.ultrasound1 = sensor200;
+		wroom.ultrasound2 = sensorSTD;
+		assert (wroom.isEmpty().getContent());
+	}
+	
+	/**
+	 * start of moveBackward tests
+	 */
+	@Test
+	public void moveBackward_workingSensor_CarState() {
+		wroom.parked = false;
+		wroom.moveCar = workingActuator;
+		wroom.position = 1;
+		wroom.ultrasound1 = sensor200;
+		wroom.ultrasound2 = sensor200;
+		assert (wroom.moveBackward().getContent() instanceof CarState);
+	}
+	
+	/**
+	 * start of StatusWrapper tests
+	 */
+	@Test
+	public void StatusWrapper_covarage_true() {
+		StatusWrapper<Boolean> test = new StatusWrapper<>(true,StatusWrapper.OK);
+		StatusWrapper<Boolean> test2 = new StatusWrapper<>(StatusWrapper.OK);
+		test.setContent(false);
+		test2.setStatus(StatusWrapper.NO_INIT);
+		assert (!test.getContent());
+		assert (test2.getStatus().equals(StatusWrapper.NO_INIT));
+	}
+	
+	/**
+	 * start of CarState tests
+	 */
+	@Test
+	public void CarState_covarage_true() {
+		CarState test = new CarState();
+		test.parked = true;
+		assert (test.hashCode() == 1<<31);
+	}
 }

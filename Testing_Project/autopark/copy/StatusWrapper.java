@@ -1,4 +1,4 @@
-package autopark;
+package autopark.copy;
 
 public class StatusWrapper <T>{
 	public static final String OK = "OK";

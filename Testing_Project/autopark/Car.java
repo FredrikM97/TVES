@@ -17,14 +17,14 @@ public class Car extends ACar {
 		if (!(moveCar instanceof Actuator)) {
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}
-
 		// Action
-		if (!moveCar.activate()) {
+		if(!moveCar.activate()) {
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.UNEXPECTED_STATE, "No working actuator");
 		}
 		position++;
 		parkingSpace = isEmpty().getContent() ? parkingSpace + 1 : 0;
-
+		
+		
 		return new StatusWrapper<>(whereIs());
 	}
 
@@ -80,12 +80,12 @@ public class Car extends ACar {
 		}
 
 		// Action
-		if (!moveCar.activate()) {
+		if(!moveCar.activate()) {
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.UNEXPECTED_STATE, "No working actuator");
 		}
 		position--;
 		parkingSpace = isEmpty().getContent() ? parkingSpace - 1 : 0;
-
+		
 		return new StatusWrapper<>(whereIs());
 	}
 
@@ -98,25 +98,31 @@ public class Car extends ACar {
 		if (!(parallelPark instanceof autopark.Actuator)) {
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}
-		
+		if (!(5 <= parkingSpace)) {
+			return new StatusWrapper<>(false, autopark.StatusWrapper.NOT_POSSIBLE, "Not enough parking spaces");
+		}
+		while (position < streetLength && parkingSpace < 5) {
+			moveForward();
+		}
 
 		// Action
-		while (position < streetLength-5 && parkingSpace < 5) {
-			if(!(moveForward().getStatus().equals(StatusWrapper.OK))) {break;};
-		}
 		if (parkingSpace >= 5) {
 			for (int i = 0; i < 5; i++) {
-				moveForward();
+				moveBackward();
 			}
 			if (!parallelPark.activate()) {
 				return new StatusWrapper<>(false, autopark.StatusWrapper.UNEXPECTED_STATE, "No working actuator");
 			}
 			parked = true;
-			return new StatusWrapper<>(true);
+
 		}
 
 		// Post condition
-		return new StatusWrapper<>(false, autopark.StatusWrapper.NOT_POSSIBLE, "Could not park");
+		if (parked) {
+			return new StatusWrapper<>(true);
+		}
+		return new StatusWrapper<>(false, autopark.StatusWrapper.UNEXPECTED_STATE, "Car is not parked");
+
 	}
 
 	@Override
@@ -134,7 +140,12 @@ public class Car extends ACar {
 			return new StatusWrapper<>(false, autopark.StatusWrapper.UNEXPECTED_STATE, "No working actuator");
 		}
 		parked = false;
-		return new StatusWrapper<>(true);
+
+		// Post condition
+		if (!parked) {
+			return new StatusWrapper<>(true);
+		}
+		return new StatusWrapper<>(false, autopark.StatusWrapper.UNEXPECTED_STATE, "Car still parked");
 	}
 
 	@Override
