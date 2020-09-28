@@ -1,13 +1,13 @@
 package autopark;
 
 public abstract class ACar extends CarState {
-	public Sensor ultrasound1 = null;
-	public Sensor ultrasound2 = null;
-	public Actuator moveCar = null;
-	public Actuator parallelPark = null;
-	public int streetLength = 500;
-	public int carWidth = 170;
-	public int stdThreshold = 10;
+	private Sensor ultrasound1 = null;
+	private Sensor ultrasound2 = null;
+	private Actuator moveCar = null;
+	private Actuator parallelPark = null;
+	private int streetLength = 500;
+	private int carWidth = 170;
+	private int stdThreshold = 10;
 
 	/**
 	 * This method moves the car 1 meter forward, queries the two sensors through
@@ -201,4 +201,60 @@ public abstract class ACar extends CarState {
 	 * @return State of the car
 	 */
 	public abstract CarState whereIs();
+
+	public Sensor getUltrasound1() {
+		return ultrasound1;
+	}
+
+	public void setUltrasound1(Sensor ultrasound1) {
+		this.ultrasound1 = ultrasound1;
+	}
+
+	public Sensor getUltrasound2() {
+		return ultrasound2;
+	}
+
+	public void setUltrasound2(Sensor ultrasound2) {
+		this.ultrasound2 = ultrasound2;
+	}
+
+	public Actuator getMoveCar() {
+		return moveCar;
+	}
+
+	public void setMoveCar(Actuator moveCar) {
+		this.moveCar = moveCar;
+	}
+
+	public Actuator getParallelPark() {
+		return parallelPark;
+	}
+
+	public void setParallelPark(Actuator parallelPark) {
+		this.parallelPark = parallelPark;
+	}
+
+	public int getStreetLength() {
+		return streetLength;
+	}
+
+	public void setStreetLength(int streetLength) {
+		this.streetLength = streetLength;
+	}
+
+	public int getCarWidth() {
+		return carWidth;
+	}
+
+	public void setCarWidth(int carWidth) {
+		this.carWidth = carWidth;
+	}
+
+	public int getStdThreshold() {
+		return stdThreshold;
+	}
+
+	public void setStdThreshold(int stdThreshold) {
+		this.stdThreshold = stdThreshold;
+	}
 }
