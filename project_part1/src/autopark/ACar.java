@@ -20,7 +20,7 @@ public abstract class ACar extends CarState {
 	 * <b>Pre-conditions:</b>
 	 * <ul>
 	 * <li>position &lt; streetLength</li>
-	 * <li>moveCar instanceof autopark.Actuator</li>
+	 * <li>moveCar != null</li>
 	 * <li>!parked</li>
 	 * </ul>
 	 * 
@@ -52,8 +52,8 @@ public abstract class ACar extends CarState {
 	 * <br>
 	 * <b>Pre-condition:</b>
 	 * <ul>
-	 * <li>ultrasound1 instanceof autopark.Sensor</li>
-	 * <li>ultrasound2 instanceof autopark.Sensor</li>
+	 * <li>ultrasound1 != null</li>
+	 * <li>ultrasound2 != null</li>
 	 * 
 	 * </ul>
 	 * 
@@ -86,7 +86,7 @@ public abstract class ACar extends CarState {
 	 * <b>Pre-conditions:</b>
 	 * <ul>
 	 * <li>0 &lt; position</li>
-	 * <li>moveCar instanceof autopark.Actuator</li>
+	 * <li>moveCar != null</li>
 	 * <li>!parked</li>
 	 * </ul>
 	 * 
@@ -121,7 +121,7 @@ public abstract class ACar extends CarState {
 	 * 
 	 * <ul>
 	 * <li>!parked</li>
-	 * <li>parallelPark instanceof autopark.Actuator</li>
+	 * <li>parallelPark != null</li>
 	 * <li>5 &lt;= parkingSpace</li>
 	 * </ul>
 	 * 
@@ -154,7 +154,7 @@ public abstract class ACar extends CarState {
 	 * 
 	 * <ul>
 	 * <li>parked</li>
-	 * <li>moveCar instanceof autopark.Actuator</li>
+	 * <li>moveCar != null</li>
 	 * <li></li>
 	 * </ul>
 	 * 

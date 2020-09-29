@@ -18,7 +18,7 @@ public class Car extends ACar {
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.NOT_POSSIBLE, "End of streetLength");
 		}
 		
-		if (!(this.getMoveCar() instanceof Actuator)) {
+		if (this.getMoveCar() == null) {
 			// To satisfy test: moveForward_noInit_noInit
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}
@@ -41,12 +41,12 @@ public class Car extends ACar {
 	public StatusWrapper<Boolean> isEmpty() {
 		// Check pre conditions
 		
-		if (!(this.getUltrasound1() instanceof Sensor)) {
+		if (this.getUltrasound1() == null) {
 			// To satisfy test: isEmpty_noInit_noInit
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NO_INIT,
 					"ultrasound1 is not an instance of Sensor");
 		}
-		if (!(this.getUltrasound2() instanceof Sensor)) {
+		if (this.getUltrasound2() == null) {
 			// To satisfy test: isEmpty_sensor2noInit_noInit
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NO_INIT,
 					"ultrasound2 is not an instance of Sensor");
@@ -96,7 +96,7 @@ public class Car extends ACar {
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.NOT_POSSIBLE, "Out of streetLength");
 		}
 		
-		if (!(this.getMoveCar() instanceof autopark.Actuator)) {
+		if (this.getMoveCar() == null) {
 			// To satisfy test: moveBackward_noInit_noInit
 			return new StatusWrapper<>(whereIs(), autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}
@@ -121,7 +121,7 @@ public class Car extends ACar {
 			// To satisfy test: park_parked_notPossible
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NOT_POSSIBLE, "Car is parked");
 		}
-		if (!(this.getParallelPark() instanceof autopark.Actuator)) {
+		if (this.getParallelPark() == null) {
 			// To satisfy test: park_noInit_noInit
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}
@@ -158,7 +158,7 @@ public class Car extends ACar {
 			// To satisfy test: unPark_notParked_true
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NOT_POSSIBLE, "Car is parked");
 		}
-		if (!(this.getMoveCar() instanceof autopark.Actuator)) {
+		if (this.getMoveCar() == null) {
 			// To satisfy test: unPark_noInit_noInit
 			return new StatusWrapper<>(false, autopark.StatusWrapper.NO_INIT, "No working actuator");
 		}

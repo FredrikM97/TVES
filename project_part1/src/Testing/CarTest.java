@@ -58,7 +58,7 @@ public class CarTest {
 		wroom.setMoveCar(workingActuator);
 		
 		wroom.setParked(false);
-		assert (wroom.moveForward().getContent() instanceof CarState);
+		assert (wroom.moveForward().getContent() != null);
 	}
 	
 	@Test
@@ -126,7 +126,7 @@ public class CarTest {
 		wroom.setParked(false);
 		wroom.setMoveCar(workingActuator);
 		wroom.setPosition(1);
-		assert (wroom.moveBackward().getContent() instanceof CarState);
+		assert (wroom.moveBackward().getContent() != null);
 	}
 
 	@Test
@@ -265,7 +265,7 @@ public class CarTest {
 		wroom.setUltrasound1(sensor200);
 		
 		wroom.setUltrasound2(sensor200);
-		assert (wroom.moveForward().getContent() instanceof CarState);
+		assert (wroom.moveForward().getContent() != null);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class CarTest {
 		wroom.setPosition(1);
 		wroom.setUltrasound1(sensor200);
 		wroom.setUltrasound2(sensor200);
-		assert (wroom.moveBackward().getContent() instanceof CarState);
+		assert (wroom.moveBackward().getContent() != null);
 	}
 	
 	/**
