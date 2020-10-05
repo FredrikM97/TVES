@@ -8,7 +8,7 @@ public class StatusWrapper <T>{
 	
 	private T content = null;
 	private String status = OK;
-	public String message = "";
+	private String message = "";
 	
 	public T getContent() {
 		return content;
@@ -25,7 +25,7 @@ public class StatusWrapper <T>{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public StatusWrapper(T content, String status, String info) {
 		this.content = content;
 		this.status = status;
@@ -45,4 +45,16 @@ public class StatusWrapper <T>{
 		this.status = status;
 	}
 	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String toString(){
+		return "Content: "+this.getContent().toString()+" \tStatus: "+this.getStatus()+" \tmessage: "+this.getMessage();
+	}
 }

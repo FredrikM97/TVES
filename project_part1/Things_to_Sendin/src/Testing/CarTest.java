@@ -54,41 +54,43 @@ public class CarTest {
 	 */
 	@Test
 	public void moveForward_noErrors_CarState() {
-		wroom.position = wroom.streetLength-1;
-		wroom.moveCar = workingActuator;
-		wroom.parked = false;
-		assert (wroom.moveForward().getContent() instanceof CarState);
+		wroom.setPosition(wroom.getStreetLength()-1);
+		wroom.setMoveCar(workingActuator);
+		
+		wroom.setParked(false);
+		assert (wroom.moveForward().getContent() != null);
 	}
 	
 	@Test
-	public void moveForward_parked_notPosible() {
-		wroom.position = wroom.streetLength-1;
-		wroom.moveCar = workingActuator;
-		wroom.parked = true;
+	public void moveForward_parked_notPossible() {
+		wroom.setPosition(wroom.getStreetLength()-1);
+		wroom.setMoveCar(workingActuator);
+		wroom.setParked(true);
 		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 	
 	@Test
-	public void moveForward_noSpace_notPosible() {
-		wroom.position = wroom.streetLength;
-		wroom.moveCar = workingActuator;
-		wroom.parked = false;
+	public void moveForward_noSpace_notPossible() {
+		wroom.setPosition(wroom.getStreetLength());
+		wroom.setMoveCar(workingActuator);
+		wroom.setParked(false);
 		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 	
 	@Test
 	public void moveForward_noInit_noInit() {
-		wroom.position = wroom.streetLength-1;
-		wroom.moveCar = null;
-		wroom.parked = false;
+		wroom.setPosition(wroom.getStreetLength()-1);
+		
+		wroom.setMoveCar(null);
+		wroom.setParked(false);
 		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 	
 	@Test
 	public void moveForward_brokenActuator_unexpectedState() {
-		wroom.position = wroom.streetLength-1;
-		wroom.moveCar = brokenActuator;
-		wroom.parked = false;
+		wroom.setPosition(wroom.getStreetLength()-1);
+		wroom.setMoveCar(brokenActuator);
+		wroom.setParked(false);
 		assert (wroom.moveForward().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
 	}
 	
@@ -97,22 +99,22 @@ public class CarTest {
 	 */
 	@Test
 	public void isEmpty_noErrors_true() {
-		wroom.ultrasound1 = sensor200;
-		wroom.ultrasound2 = sensor200;
+		wroom.setUltrasound1(sensor200);
+		wroom.setUltrasound2(sensor200);
 		assert (wroom.isEmpty().getContent());
 	}
 	
 	@Test
 	public void isEmpty_notEmpty_false() {
-		wroom.ultrasound1 = sensor0;
-		wroom.ultrasound2 = sensor0;
+		wroom.setUltrasound1(sensor0);
+		wroom.setUltrasound2(sensor0);
 		assert (!wroom.isEmpty().getContent());
 	}
 
 	@Test
 	public void isEmpty_noInit_noInit() {
-		wroom.ultrasound1 = null;
-		wroom.ultrasound2 = null;
+		wroom.setUltrasound1(null);
+		wroom.setUltrasound2(null);
 		assert (wroom.isEmpty().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 	
@@ -121,41 +123,41 @@ public class CarTest {
 	 */
 	@Test
 	public void moveBackward_noError_CarState() {
-		wroom.parked = false;
-		wroom.moveCar = workingActuator;
-		wroom.position = 1;
-		assert (wroom.moveBackward().getContent() instanceof CarState);
+		wroom.setParked(false);
+		wroom.setMoveCar(workingActuator);
+		wroom.setPosition(1);
+		assert (wroom.moveBackward().getContent() != null);
 	}
 
 	@Test
 	public void moveBackward_parked_notPossible() {
-		wroom.parked = true;	
-		wroom.moveCar = workingActuator;
-		wroom.position = 1;
+		wroom.setParked(true);
+		wroom.setMoveCar(workingActuator);
+		wroom.setPosition(1);
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 	
 	@Test
 	public void moveBackward_noSpace_notPossible() {
-		wroom.parked = false;
-		wroom.moveCar = workingActuator;
-		wroom.position = 0;
+		wroom.setParked(false);
+		wroom.setMoveCar(workingActuator);
+		wroom.setPosition(0);
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 	
 	@Test
 	public void moveBackward_noInit_noInit() {
-		wroom.parked = false;
-		wroom.moveCar = null;
-		wroom.position = 1;
+		wroom.setParked(false);
+		wroom.setMoveCar(null);
+		wroom.setPosition(1);
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 	
 	@Test
 	public void moveBackward_brokenActuator_unexpectedState() {
-		wroom.position = wroom.streetLength;
-		wroom.moveCar = brokenActuator;
-		wroom.parked = false;
+		wroom.setPosition(wroom.getStreetLength());
+		wroom.setMoveCar(brokenActuator);
+		wroom.setParked(false);
 		assert (wroom.moveBackward().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
 	}
 	
@@ -164,41 +166,42 @@ public class CarTest {
 	 */
 	@Test
 	public void park_noError_true() {
-		wroom.parked = false;
-		wroom.parallelPark = workingActuator;
-		wroom.parkingSpace = 5;
+		wroom.setParked(false);
+		wroom.setParallelPark(workingActuator);
+		
+		wroom.setParkingSpace(5);
 		assert (wroom.park().getContent());
 	}
 
 	@Test
 	public void park_noSpace_notPossible() {
-		wroom.parked = false;
-		wroom.parallelPark = workingActuator;
-		wroom.parkingSpace = 4;
+		wroom.setParked(false);
+		wroom.setParallelPark(workingActuator);
+		wroom.setParkingSpace(4);
 		assert (wroom.park().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 
 	@Test
 	public void park_parked_notPossible() {
-		wroom.parked = true;
-		wroom.parallelPark = workingActuator;
-		wroom.parkingSpace = 5;
+		wroom.setParked(true);
+		wroom.setParallelPark(workingActuator);
+		wroom.setParkingSpace(5);
 		assert (wroom.park().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 
 	@Test
 	public void park_noInit_noInit() {
-		wroom.parked = false;
-		wroom.parallelPark = null;
-		wroom.parkingSpace = 5;
+		wroom.setParked(false);
+		wroom.setParallelPark(null);
+		wroom.setParkingSpace(5);
 		assert (wroom.park().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 
 	@Test
 	public void park_brokenActuator_unexpectedState() {
-		wroom.parked = false;
-		wroom.parallelPark = brokenActuator;
-		wroom.parkingSpace = 5;
+		wroom.setParked(false);
+		wroom.setParallelPark(brokenActuator);
+		wroom.setParkingSpace(5);
 		assert (wroom.park().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
 	}
 
@@ -207,29 +210,29 @@ public class CarTest {
 	 */
 	@Test
 	public void unPark_noError_true() {
-		wroom.parked = true;
-		wroom.moveCar = workingActuator;
+		wroom.setParked(true);
+		wroom.setMoveCar(workingActuator);
 		assert (wroom.unPark().getContent());
 	}
 
 	@Test
 	public void unPark_notParked_true() {
-		wroom.parked = false;
-		wroom.moveCar = workingActuator;
+		wroom.setParked(false);
+		wroom.setMoveCar(workingActuator);
 		assert (wroom.unPark().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 
 	@Test
 	public void unPark_noInit_noInit() {
-		wroom.parked = true;
-		wroom.moveCar = null;
+		wroom.setParked(true);
+		wroom.setMoveCar(null);
 		assert (wroom.unPark().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 
 	@Test
 	public void unPark_actuatorFail_unexpectedState() {
-		wroom.parked = true;
-		wroom.moveCar = brokenActuator;
+		wroom.setParked(true);
+		wroom.setMoveCar(brokenActuator);
 		assert (wroom.unPark().getStatus().equals(autopark.StatusWrapper.UNEXPECTED_STATE));
 	}
 
@@ -242,7 +245,7 @@ public class CarTest {
 
 		// Assert the opposite to test the compareTo method
 		CarState lastState = wroom.whereIs();
-		wroom.position = wroom.position - 1;
+		wroom.setPosition(wroom.getPosition()-1);
 		assert (wroom.compareTo(lastState) != 0);
 	}
 	
@@ -256,12 +259,13 @@ public class CarTest {
 	 */
 	@Test
 	public void moveForward_workingSensors_CarState() {
-		wroom.position = wroom.streetLength-1;
-		wroom.moveCar = workingActuator;
-		wroom.parked = false;
-		wroom.ultrasound1 = sensor200;
-		wroom.ultrasound2 = sensor200;
-		assert (wroom.moveForward().getContent() instanceof CarState);
+		wroom.setPosition(wroom.getStreetLength()-1);
+		wroom.setMoveCar(workingActuator);
+		wroom.setParked(false);
+		wroom.setUltrasound1(sensor200);
+		
+		wroom.setUltrasound2(sensor200);
+		assert (wroom.moveForward().getContent() != null);
 	}
 	
 	/**
@@ -269,29 +273,29 @@ public class CarTest {
 	 */
 	@Test
 	public void isEmpty_sensor2noInit_noInit() {
-		wroom.ultrasound1 = sensor200;
-		wroom.ultrasound2 = null;
+		wroom.setUltrasound1(sensor200);
+		wroom.setUltrasound2(null);
 		assert (wroom.isEmpty().getStatus().equals(autopark.StatusWrapper.NO_INIT));
 	}
 	
 	@Test
 	public void isEmpty_stdSensors_notPossible() {
-		wroom.ultrasound1 = sensorSTD;
-		wroom.ultrasound2 = sensorSTD;
+		wroom.setUltrasound1(sensorSTD);
+		wroom.setUltrasound2(sensorSTD);
 		assert (wroom.isEmpty().getStatus().equals(autopark.StatusWrapper.NOT_POSSIBLE));
 	}
 	
 	@Test
 	public void isEmpty_Sensors1isStd_true() {
-		wroom.ultrasound1 = sensorSTD;
-		wroom.ultrasound2 = sensor200;
+		wroom.setUltrasound1(sensorSTD);
+		wroom.setUltrasound2(sensor200);
 		assert (wroom.isEmpty().getContent());
 	}
 	
 	@Test
 	public void isEmpty_Sensors2isStd_true() {
-		wroom.ultrasound1 = sensor200;
-		wroom.ultrasound2 = sensorSTD;
+		wroom.setUltrasound1(sensor200);
+		wroom.setUltrasound2(sensorSTD);
 		assert (wroom.isEmpty().getContent());
 	}
 	
@@ -300,12 +304,12 @@ public class CarTest {
 	 */
 	@Test
 	public void moveBackward_workingSensor_CarState() {
-		wroom.parked = false;
-		wroom.moveCar = workingActuator;
-		wroom.position = 1;
-		wroom.ultrasound1 = sensor200;
-		wroom.ultrasound2 = sensor200;
-		assert (wroom.moveBackward().getContent() instanceof CarState);
+		wroom.setParked(false);
+		wroom.setMoveCar(workingActuator);
+		wroom.setPosition(1);
+		wroom.setUltrasound1(sensor200);
+		wroom.setUltrasound2(sensor200);
+		assert (wroom.moveBackward().getContent() != null);
 	}
 	
 	/**
@@ -327,7 +331,7 @@ public class CarTest {
 	@Test
 	public void CarState_covarage_true() {
 		CarState test = new CarState();
-		test.parked = true;
+		test.setParked(true);
 		assert (test.hashCode() == 1<<31);
 	}
 }
